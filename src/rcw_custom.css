@@ -1,0 +1,10 @@
+.rcw-widget-container {
+    /* bottom: 0; */
+    display: inline-block;
+    flex-direction: column;
+    max-width: 370px;
+    margin: 0;
+    position: static;
+    /* right: 0; */
+    /* z-index: 1; */
+}
