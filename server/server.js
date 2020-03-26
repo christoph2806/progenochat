@@ -1,4 +1,4 @@
-require('dotenv').config({path:'../.env'});
+require('dotenv').config();
 const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({ port: process.env.SERVER_PORT });

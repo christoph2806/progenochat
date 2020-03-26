@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import dotenv from 'dotenv';
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
@@ -12,9 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Box from '@material-ui/core/Box';
 import {ADD, REMOVE, REMOVEFIRST, UPDATE, SPEAKERS} from './constants.js';
 
-dotenv.config();
-
-const URL = process.env.WEBSOCKET_URL;
+const URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 
 const styles = theme => ({
