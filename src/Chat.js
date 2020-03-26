@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-// import ChatInput from './ChatInput'
-// import ChatMessage from './ChatMessage'
-
+import dotenv from 'dotenv';
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
@@ -14,7 +12,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import Box from '@material-ui/core/Box';
 import {ADD, REMOVE, REMOVEFIRST, UPDATE, SPEAKERS} from './constants.js';
 
-const URL = 'ws://localhost:3030';
+dotenv.config();
+
+const URL = process.env.WEBSOCKET_URL;
 
 
 const styles = theme => ({
@@ -30,6 +30,18 @@ const styles = theme => ({
     borderRadius: 10,
     boxShadow: "0 2px 10px 1px #b5b5b5",
   },
+
+  cardSpeaker: {
+    textAlign: 'left',
+    padding: 10,
+    margin: 10,
+    maxWidth: 370,
+    color: theme.palette.text.secondary,
+    borderRadius: 10,
+    boxShadow: "0 2px 10px 1px #b5b5b5",
+    backgroundColor: "#a0ed6d",
+  },
+
   input: {
     margin: 20,
   },
@@ -64,6 +76,7 @@ class Chat extends Component {
     messages: [],
     buttonState: this.buttonStates[0],
     speakers: [],
+    isSpeaking: false,
   };
 
   ws = new WebSocket(URL);
@@ -96,6 +109,7 @@ class Chat extends Component {
       if (speakers.indexOf(this.state.name) < 0) {
         this.setState({buttonState: this.buttonStates[REMOVE]});
       }
+      this.setState({isSpeaking: speakers[0] === this.state.name});
     };
 
     this.ws.onclose = () => {
@@ -218,7 +232,7 @@ class Chat extends Component {
 
     return (
       <Container maxWidth={'md'}>
-        <Card className={classes.card}>
+        <Card className={this.state.isSpeaking ? classes.cardSpeaker : classes.card}>
           {this.nameField()}
           {this.moderateButton()}
         </Card>

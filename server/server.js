@@ -1,6 +1,7 @@
+require('dotenv').config({path:'../.env'});
 const WebSocket = require('ws');
 
-const wss = new WebSocket.Server({ port: 3030 });
+const wss = new WebSocket.Server({ port: process.env.SERVER_PORT });
 
 let speakers = [];
 
