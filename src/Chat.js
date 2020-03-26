@@ -84,6 +84,11 @@ class Chat extends Component {
       // on connecting, do nothing but log it to the console
       console.log('connected');
       this.getSpeakers();
+      const name = localStorage.getItem('ProgenoChatName');
+      if (name !== '') {
+        this.setState({name});
+        this.setState({inputState: false});
+      }
     };
 
     this.ws.onmessage = evt => {
@@ -188,6 +193,7 @@ class Chat extends Component {
   updateName = e => {
     e.preventDefault();
     this.setState({name: e.target.value});
+    localStorage.setItem('ProgenoChatName', e.target.value)
   };
 
   moderateButton() {
