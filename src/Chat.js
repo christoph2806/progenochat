@@ -39,6 +39,17 @@ const styles = theme => ({
     backgroundColor: "#a0ed6d",
   },
 
+  cardWaiting: {
+    textAlign: 'left',
+    padding: 10,
+    margin: 10,
+    maxWidth: 370,
+    color: theme.palette.text.secondary,
+    borderRadius: 10,
+    boxShadow: "0 2px 10px 1px #b5b5b5",
+    backgroundColor: "#ffe605",
+  },
+
   input: {
     margin: 20,
   },
@@ -74,6 +85,7 @@ class Chat extends Component {
     buttonState: this.buttonStates[0],
     speakers: [],
     isSpeaking: false,
+    cardClass: this.props.classes.card,
   };
 
   ws = new WebSocket(URL);
@@ -111,7 +123,13 @@ class Chat extends Component {
       if (speakers.indexOf(this.state.name) < 0) {
         this.setState({buttonState: this.buttonStates[REMOVE]});
       }
-      this.setState({isSpeaking: speakers[0] === this.state.name});
+      if (this.state.name === speakers[0]) {
+        this.setState({cardClass: this.props.classes.cardSpeaker});
+      } else if (speakers.indexOf(this.state.name) > -1) {
+        this.setState({cardClass: this.props.classes.cardWaiting});
+      } else {
+        this.setState({cardClass: this.props.classes.card});
+      }
     };
 
     this.ws.onclose = () => {
@@ -235,7 +253,7 @@ class Chat extends Component {
 
     return (
       <Container maxWidth={'md'}>
-        <Card className={this.state.isSpeaking ? classes.cardSpeaker : classes.card}>
+        <Card className={this.state.cardClass}>
           {this.nameField()}
           {this.moderateButton()}
         </Card>
